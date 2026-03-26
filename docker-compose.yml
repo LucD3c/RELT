@@ -5,11 +5,12 @@ services:
     restart: unless-stopped
     volumes:
       - relt-data:/app/data
-    environment:
-      - DATABASE_URL=sqlite:////app/data/relt.db
-      - SECRET_KEY=C3ntr0M3d1c0V1l3ll4
+    env_file:
+      - .env
     expose:
       - "8000"
+    extra_hosts:
+      - "host-gateway:host-gateway"
 
   frontend:
     build: ./frontend
