@@ -7,7 +7,7 @@ services:
       - relt-data:/app/data
     environment:
       - DATABASE_URL=sqlite:////app/data/relt.db
-      - SECRET_KEY=cambia-esta-clave-en-produccion-32chars
+      - SECRET_KEY=C3ntr0M3d1c0V1l3ll4
     expose:
       - "8000"
 

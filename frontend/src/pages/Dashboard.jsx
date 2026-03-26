@@ -3,8 +3,9 @@ import { getDevices, createDevice, updateDevice, deleteDevice } from "../utils/a
 import DeviceCard from "../components/DeviceCard"
 import DeviceForm from "../components/DeviceForm"
 import { DEVICE_TYPES } from "../utils/constants"
+import { exportToExcel } from "../utils/export"
 import toast from "react-hot-toast"
-import { Plus, Search } from "lucide-react"
+import { Plus, Search, FileDown } from "lucide-react"
 
 export default function Dashboard() {
   const [devices, setDevices] = useState([])
@@ -57,9 +58,14 @@ export default function Dashboard() {
     <div className="dashboard">
       <div className="dashboard-header">
         <h1>RELT — Relevamiento IT</h1>
-        <button className="btn-primary" onClick={() => { setEditing(null); setShowForm(true) }}>
-          <Plus size={16} /> Nuevo dispositivo
-        </button>
+        <div className="header-actions">
+          <button className="btn-secondary" onClick={() => exportToExcel(devices)}>
+            <FileDown size={16} /> Exportar Excel
+          </button>
+          <button className="btn-primary" onClick={() => { setEditing(null); setShowForm(true) }}>
+            <Plus size={16} /> Nuevo dispositivo
+          </button>
+        </div>
       </div>
 
       <div className="filters">
@@ -80,7 +86,7 @@ export default function Dashboard() {
       {showForm && (
         <div className="modal-overlay">
           <div className="modal">
-            <h2>{editing ? "Editar dispositivo" : "Nuevo dispositivo"}</h2>
+            <h2>{editing ? "✏️ Editar dispositivo" : "➕ Nuevo dispositivo"}</h2>
             <DeviceForm
               initial={editing}
               onSubmit={handleSubmit}
@@ -100,7 +106,13 @@ export default function Dashboard() {
       ) : (
         <div className="device-grid">
           {devices.map(d => (
-            <DeviceCard key={d.id} device={d} onEdit={handleEdit} onDelete={handleDelete} />
+            <DeviceCard
+              key={d.id}
+              device={d}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              onRefresh={load}
+            />
           ))}
         </div>
       )}

@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.database import engine, Base
 from app.routes import devices
+from app.routes import ping
 
 Base.metadata.create_all(bind=engine)
 
@@ -20,6 +21,7 @@ app.add_middleware(
 )
 
 app.include_router(devices.router, prefix="/api")
+app.include_router(ping.router, prefix="/api")
 
 @app.get("/")
 def root():
