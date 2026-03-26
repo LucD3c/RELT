@@ -195,3 +195,18 @@ docker run --rm -v relt_relt-data:/data -v $(pwd):/backup alpine tar czf /backup
 ## Autor
 
 Desarrollado por [LucD3c](https://github.com/LucD3c)
+
+---
+
+## ⚠️ Nota sobre el Ping
+
+La función de ping requiere que el dispositivo destino tenga habilitada la respuesta a solicitudes ICMP en su firewall.
+
+**Windows:** Por defecto bloquea el ping. Para habilitarlo, ejecutar en PowerShell como Administrador:
+```powershell
+netsh advfirewall firewall add rule name="Allow ICMPv4" protocol=icmpv4:8,any dir=in action=allow
+```
+
+**Linux:** El ping funciona por defecto sin configuración adicional.
+
+**macOS:** El ping funciona por defecto sin configuración adicional.
